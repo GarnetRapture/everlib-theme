@@ -52,6 +52,11 @@
     ],
     "iconThemes": [
       {
+        "id": "everlib-symbols-icon-theme",
+        "label": "everlib Symbol Icons (Antigravity Theme)",
+        "path": "./themes/symbols-icon-theme/src/symbol-icon-theme.json"
+      },
+      {
         "id": "everlib-icon-theme",
         "label": "everlib Seti Icon Theme",
         "path": "./themes/icon-theme/vs-seti-icon-theme.json"
