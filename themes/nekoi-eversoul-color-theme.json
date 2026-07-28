@@ -243,16 +243,16 @@
   "semanticHighlighting": true,
   "semanticTokenColors": {
     "variable.readonly.local": "#c0caf5",
-    "function.declaration": "#7dcfff",
-    "function.defaultLibrary": "#7dcfff",
+    "function.declaration": "#7aa2f7",
+    "function.defaultLibrary": "#7aa2f7",
     "class": "#7aa2f7",
     "interface": "#7aa2f7",
-    "enum": "#ff9e64",
+    "enum": "#7dcfff",
     "property": "#7dcfff",
     "parameter": "#e0af68",
-    "keyword": "#ff9e64",
-    "keyword.control": "#ff9e64",
-    "modifier": "#ff9e64",
+    "keyword": "#ff75a0",
+    "keyword.control": "#ff75a0",
+    "modifier": "#ff75a0",
     "type": "#7aa2f7",
     "namespace": "#ff75a0",
     "variable": "#c0caf5",
@@ -280,7 +280,7 @@
     },
     {
       "scope": ["invalid.deprecated"],
-      "settings": { "foreground": "#ff9e64", "fontStyle": "underline italic" }
+      "settings": { "foreground": "#ff75a0", "fontStyle": "underline italic" }
     },
     {
       "name": "Underlined markup",
@@ -358,7 +358,7 @@
         "markup.heading.setext",
         "punctuation.definition.raw.markdown"
       ],
-      "settings": { "foreground": "#ff9e64", "fontStyle": "bold" }
+      "settings": { "foreground": "#ff75a0", "fontStyle": "bold" }
     },
     {
       "scope": [
