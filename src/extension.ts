@@ -18,7 +18,22 @@ export function activate(context: vscode.ExtensionContext): void {
     }
   );
 
-  context.subscriptions.push(openSidebarDisposable);
+  const setupWallpaperDisposable = vscode.commands.registerCommand(
+    'nekoiEversoul.setupWallpaper',
+    async () => {
+      const wallpaperPath = vscode.Uri.joinPath(context.extensionUri, 'resources', 'wallpaper', 'garnet-rapture-costume01.png').fsPath;
+      const fileUri = `file:///${wallpaperPath.replace(/\\/g, '/')}`;
+
+      const config = vscode.workspace.getConfiguration('background');
+      await config.update('enabled', true, vscode.ConfigurationTarget.Global);
+      await config.update('useDefault', false, vscode.ConfigurationTarget.Global);
+      await config.update('customImages', [fileUri], vscode.ConfigurationTarget.Global);
+
+      vscode.window.showInformationMessage(`everlib Wallpaper configured: ${fileUri}`);
+    }
+  );
+
+  context.subscriptions.push(openSidebarDisposable, setupWallpaperDisposable);
 }
 
 export function deactivate(): void {}

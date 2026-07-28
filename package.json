@@ -54,6 +54,10 @@
       {
         "command": "nekoiEversoul.openSidebar",
         "title": "Nekoi: Open Claude AI Sidebar"
+      },
+      {
+        "command": "nekoiEversoul.setupWallpaper",
+        "title": "Nekoi: Setup Editor Background Wallpaper"
       }
     ]
   },

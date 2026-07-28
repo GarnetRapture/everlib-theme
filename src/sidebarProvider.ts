@@ -34,6 +34,10 @@ export class NekoiSidebarProvider implements vscode.WebviewViewProvider {
           vscode.window.showInformationMessage('Nekoi Eversoul: Garnet Rapture theme applied.');
           break;
         }
+        case 'setupWallpaper': {
+          await vscode.commands.executeCommand('nekoiEversoul.setupWallpaper');
+          break;
+        }
       }
     });
   }
@@ -251,6 +255,7 @@ export class NekoiSidebarProvider implements vscode.WebviewViewProvider {
 
     <div class="action-bar">
       <button class="theme-btn" id="applyThemeBtn">Garnet Rapture 테마 즉시 적용</button>
+      <button class="theme-btn" id="setupWallpaperBtn">메인 에디터 월페이퍼 자동 주입</button>
       <div class="input-box">
         <input type="text" id="userInput" placeholder="메시지를 입력하세요..." />
         <button id="sendBtn">전송</button>
@@ -264,6 +269,7 @@ export class NekoiSidebarProvider implements vscode.WebviewViewProvider {
     const userInput = document.getElementById('userInput');
     const sendBtn = document.getElementById('sendBtn');
     const applyThemeBtn = document.getElementById('applyThemeBtn');
+    const setupWallpaperBtn = document.getElementById('setupWallpaperBtn');
 
     function appendMessage(text, isUser) {
       const msgDiv = document.createElement('div');
@@ -290,6 +296,10 @@ export class NekoiSidebarProvider implements vscode.WebviewViewProvider {
 
     applyThemeBtn.addEventListener('click', () => {
       vscode.postMessage({ type: 'applyTheme' });
+    });
+
+    setupWallpaperBtn.addEventListener('click', () => {
+      vscode.postMessage({ type: 'setupWallpaper' });
     });
 
     window.addEventListener('message', (event) => {
