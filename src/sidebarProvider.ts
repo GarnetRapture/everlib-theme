@@ -202,25 +202,25 @@ export class NekoiSidebarProvider implements vscode.WebviewViewProvider {
   <div class="container">
     <div class="header">
       <img src="${iconUri}" alt="Icon" />
-      <h2>everlib 커스텀 컨트롤러</h2>
-      <span class="badge">v1.0.2</span>
+      <h2>everlib Controller</h2>
+      <span class="badge">v1.0.6</span>
     </div>
 
     <div class="panel-card">
-      <h3>Garnet Rapture Color Theme</h3>
-      <p>가넷 딥 다크 크림슨 레드 & 흑장미 톤 컬러 테마를 적용합니다.</p>
-      <button class="action-btn" id="applyThemeBtn">Garnet Rapture 테마 즉시 적용</button>
+      <h3>Garnet Rapture Theme</h3>
+      <p>Applies Garnet Rapture deep dark crimson red color palette.</p>
+      <button class="action-btn" id="applyThemeBtn">Apply Garnet Rapture Theme</button>
     </div>
 
     <div class="panel-card">
-      <h3>메인 에디터 월페이퍼 자동 설정</h3>
-      <p>resources/wallpaper/garnet-rapture-costume01.png 이미지를 에디터 메인 배경에 주입합니다.</p>
-      <button class="action-btn" id="setupWallpaperBtn">메인 월페이퍼 자동 주입</button>
+      <h3>Editor Wallpaper Setup</h3>
+      <p>Injects background wallpaper into the main editor area.</p>
+      <button class="action-btn" id="setupWallpaperBtn">Setup Editor Wallpaper</button>
     </div>
 
     <div class="panel-card">
-      <h3>Claude / Codex AI 패널 연동</h3>
-      <p>chat.*, inlineChat.*, interactive.* 토큰이 전면 수록되어 Claude Code 패널과 자동 융합됩니다.</p>
+      <h3>Claude / Codex AI Integration</h3>
+      <p>Official chat.*, inlineChat.*, and interactive.* tokens are fully active.</p>
     </div>
   </div>
 
