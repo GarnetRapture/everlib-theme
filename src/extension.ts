@@ -1,6 +1,19 @@
 import * as vscode from 'vscode';
 import { NekoiSidebarProvider } from './sidebarProvider';
 
+async function triggerBackgroundReload(): Promise<void> {
+  try {
+    await vscode.commands.executeCommand('extension.background.reload');
+  } catch {
+    // Command not found if background extension is not installed
+  }
+  try {
+    await vscode.commands.executeCommand('backgroundCover.start');
+  } catch {
+    // Command not found if background-cover extension is not installed
+  }
+}
+
 export function activate(context: vscode.ExtensionContext): void {
   const sidebarProvider = new NekoiSidebarProvider(context.extensionUri);
 
@@ -29,12 +42,13 @@ export function activate(context: vscode.ExtensionContext): void {
       const wallpaperPath = vscode.Uri.joinPath(context.extensionUri, 'resources', 'wallpaper', 'garnet-rapture-costume01.png').fsPath;
       const formattedPath = wallpaperPath.replace(/\\/g, '/');
       const fileUri = `file:///${formattedPath.startsWith('/') ? formattedPath.slice(1) : formattedPath}`;
+      const fileUriLower = `file:///${formattedPath.charAt(0).toLowerCase()}${formattedPath.slice(1)}`;
 
-      // 1. shalldie/vscode-background latest 2026 specification
+      // 1. Write multi-schema paths for maximum extension compatibility
       const config = vscode.workspace.getConfiguration('background');
       await config.update('enabled', true, vscode.ConfigurationTarget.Global);
       await config.update('useDefault', false, vscode.ConfigurationTarget.Global);
-      await config.update('customImages', [fileUri], vscode.ConfigurationTarget.Global);
+      await config.update('customImages', [fileUri, fileUriLower, formattedPath], vscode.ConfigurationTarget.Global);
       await config.update('editor', {
         useFront: false,
         style: {
@@ -43,7 +57,7 @@ export function activate(context: vscode.ExtensionContext): void {
           'background-repeat': 'no-repeat',
           'opacity': 0.25
         },
-        images: [fileUri]
+        images: [fileUri, fileUriLower, formattedPath]
       }, vscode.ConfigurationTarget.Global);
 
       // 2. background-cover extension compatibility specification
@@ -51,7 +65,10 @@ export function activate(context: vscode.ExtensionContext): void {
       await coverConfig.update('imagePath', formattedPath, vscode.ConfigurationTarget.Global);
       await coverConfig.update('opacity', 0.25, vscode.ConfigurationTarget.Global);
 
-      vscode.window.showInformationMessage(`everlib Default Wallpaper configured: ${fileUri}`);
+      // 3. Automatically trigger background extensions to patch and render
+      await triggerBackgroundReload();
+
+      vscode.window.showInformationMessage(`everlib Default Wallpaper configured & background reloaded: ${fileUri}`);
     }
   );
 
@@ -70,12 +87,13 @@ export function activate(context: vscode.ExtensionContext): void {
       if (fileUri && fileUri[0]) {
         const imagePath = fileUri[0].fsPath.replace(/\\/g, '/');
         const formattedUri = `file:///${imagePath.startsWith('/') ? imagePath.slice(1) : imagePath}`;
+        const formattedUriLower = `file:///${imagePath.charAt(0).toLowerCase()}${imagePath.slice(1)}`;
 
-        // 1. shalldie/vscode-background latest 2026 specification
+        // 1. Write multi-schema paths for maximum extension compatibility
         const config = vscode.workspace.getConfiguration('background');
         await config.update('enabled', true, vscode.ConfigurationTarget.Global);
         await config.update('useDefault', false, vscode.ConfigurationTarget.Global);
-        await config.update('customImages', [formattedUri], vscode.ConfigurationTarget.Global);
+        await config.update('customImages', [formattedUri, formattedUriLower, imagePath], vscode.ConfigurationTarget.Global);
         await config.update('editor', {
           useFront: false,
           style: {
@@ -84,7 +102,7 @@ export function activate(context: vscode.ExtensionContext): void {
             'background-repeat': 'no-repeat',
             'opacity': 0.25
           },
-          images: [formattedUri]
+          images: [formattedUri, formattedUriLower, imagePath]
         }, vscode.ConfigurationTarget.Global);
 
         // 2. background-cover extension compatibility specification
@@ -92,7 +110,10 @@ export function activate(context: vscode.ExtensionContext): void {
         await coverConfig.update('imagePath', imagePath, vscode.ConfigurationTarget.Global);
         await coverConfig.update('opacity', 0.25, vscode.ConfigurationTarget.Global);
 
-        vscode.window.showInformationMessage(`everlib Custom Wallpaper set: ${formattedUri}`);
+        // 3. Automatically trigger background extensions to patch and render
+        await triggerBackgroundReload();
+
+        vscode.window.showInformationMessage(`everlib Custom Wallpaper set & background reloaded: ${formattedUri}`);
       }
     }
   );
