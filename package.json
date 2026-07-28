@@ -2,7 +2,7 @@
   "name": "everlib-theme",
   "displayName": "everlib Theme",
   "description": "Nekoi Eversoul Garnet Rapture Color Theme with custom sidebar panel",
-  "version": "1.0.9",
+  "version": "1.0.0",
   "publisher": "GarnetRapture",
   "author": "GarnetRapture",
   "repository": {
@@ -57,7 +57,11 @@
       },
       {
         "command": "nekoiEversoul.setupWallpaper",
-        "title": "everlib: Setup Editor Wallpaper"
+        "title": "everlib: Setup Default Editor Wallpaper"
+      },
+      {
+        "command": "nekoiEversoul.selectCustomWallpaper",
+        "title": "everlib: Select Custom Background Image..."
       }
     ]
   },

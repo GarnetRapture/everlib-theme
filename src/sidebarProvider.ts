@@ -38,6 +38,10 @@ export class NekoiSidebarProvider implements vscode.WebviewViewProvider {
           await vscode.commands.executeCommand('nekoiEversoul.setupWallpaper');
           break;
         }
+        case 'selectCustomWallpaper': {
+          await vscode.commands.executeCommand('nekoiEversoul.selectCustomWallpaper');
+          break;
+        }
       }
     });
   }
@@ -64,12 +68,12 @@ export class NekoiSidebarProvider implements vscode.WebviewViewProvider {
   <title>Nekoi Claude AI Panel</title>
   <style>
     :root {
-      --bg-acrylic: rgba(13, 8, 10, 0.45);
-      --card-acrylic: rgba(43, 8, 16, 0.55);
-      --text-main: #f4e6db;
-      --text-sub: #e6b800;
-      --accent-color: #ff2a4b;
-      --border-acrylic: rgba(255, 42, 75, 0.3);
+      --bg-acrylic: rgba(10, 10, 10, 0.45);
+      --card-acrylic: rgba(24, 24, 24, 0.55);
+      --text-main: #f5f5f5;
+      --text-sub: #ffc107;
+      --accent-color: #ff1744;
+      --border-acrylic: rgba(255, 23, 68, 0.25);
       --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6);
     }
     body {
@@ -108,7 +112,7 @@ export class NekoiSidebarProvider implements vscode.WebviewViewProvider {
       opacity: 0.55;
       pointer-events: none;
       z-index: 1;
-      filter: drop-shadow(0 0 12px rgba(255, 42, 75, 0.5));
+      filter: drop-shadow(0 0 12px rgba(255, 23, 68, 0.5));
     }
     .container {
       position: relative;
@@ -122,7 +126,7 @@ export class NekoiSidebarProvider implements vscode.WebviewViewProvider {
       align-items: center;
       gap: 10px;
       padding: 10px 12px;
-      background: rgba(20, 5, 9, 0.75);
+      background: rgba(10, 10, 10, 0.75);
       backdrop-filter: blur(12px);
       border: 1px solid var(--border-acrylic);
       border-radius: 10px;
@@ -142,17 +146,17 @@ export class NekoiSidebarProvider implements vscode.WebviewViewProvider {
       flex: 1;
     }
     .badge {
-      background: linear-gradient(135deg, #ff4d6a, #8f1a2e);
+      background: linear-gradient(135deg, #ff1744, #800014);
       color: #ffffff;
       font-size: 9px;
       padding: 2px 8px;
       border-radius: 12px;
       font-weight: bold;
       letter-spacing: 0.5px;
-      box-shadow: 0 0 8px rgba(255, 77, 106, 0.5);
+      box-shadow: 0 0 8px rgba(255, 23, 68, 0.5);
     }
     .panel-card {
-      background: rgba(20, 5, 9, 0.7);
+      background: rgba(18, 18, 18, 0.75);
       backdrop-filter: blur(10px);
       border: 1px solid var(--border-acrylic);
       border-radius: 10px;
@@ -174,7 +178,7 @@ export class NekoiSidebarProvider implements vscode.WebviewViewProvider {
     }
     .action-btn {
       width: 100%;
-      background: linear-gradient(135deg, #4a0d18, #2b0810);
+      background: linear-gradient(135deg, #242424, #121212);
       color: #ffffff;
       border: 1px solid var(--border-acrylic);
       padding: 10px 14px;
@@ -190,8 +194,8 @@ export class NekoiSidebarProvider implements vscode.WebviewViewProvider {
       gap: 6px;
     }
     .action-btn:hover {
-      background: linear-gradient(135deg, #ff2a4b, #8b152b);
-      box-shadow: 0 0 12px rgba(255, 42, 75, 0.6);
+      background: linear-gradient(135deg, #ff1744, #800014);
+      box-shadow: 0 0 12px rgba(255, 23, 68, 0.6);
     }
   </style>
 </head>
@@ -215,7 +219,8 @@ export class NekoiSidebarProvider implements vscode.WebviewViewProvider {
     <div class="panel-card">
       <h3>Editor Wallpaper Setup</h3>
       <p>Injects background wallpaper into the main editor area.</p>
-      <button class="action-btn" id="setupWallpaperBtn">Setup Editor Wallpaper</button>
+      <button class="action-btn" id="setupWallpaperBtn">Setup Default Wallpaper</button>
+      <button class="action-btn" id="selectCustomWallpaperBtn">Select Custom Image...</button>
     </div>
 
     <div class="panel-card">
@@ -228,6 +233,7 @@ export class NekoiSidebarProvider implements vscode.WebviewViewProvider {
     const vscode = acquireVsCodeApi();
     const applyThemeBtn = document.getElementById('applyThemeBtn');
     const setupWallpaperBtn = document.getElementById('setupWallpaperBtn');
+    const selectCustomWallpaperBtn = document.getElementById('selectCustomWallpaperBtn');
 
     applyThemeBtn.addEventListener('click', () => {
       vscode.postMessage({ type: 'applyTheme' });
@@ -235,6 +241,10 @@ export class NekoiSidebarProvider implements vscode.WebviewViewProvider {
 
     setupWallpaperBtn.addEventListener('click', () => {
       vscode.postMessage({ type: 'setupWallpaper' });
+    });
+
+    selectCustomWallpaperBtn.addEventListener('click', () => {
+      vscode.postMessage({ type: 'selectCustomWallpaper' });
     });
   </script>
 </body>
