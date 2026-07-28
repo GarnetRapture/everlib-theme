@@ -5,10 +5,10 @@
 # everlib Theme (Garnet Rapture)
 
 [![VS Code Extension](https://img.shields.io/badge/VS%20Code-v1.80%2B-007ACC?style=for-the-badge&logo=visualstudiocode&logoColor=white)](https://marketplace.visualstudio.com/)
-[![Theme Version](https://img.shields.io/badge/version-1.0.0-ff1744?style=for-the-badge)](https://github.com/GarnetRapture/everlib-theme)
+[![Theme Version](https://img.shields.io/badge/version-1.0.0-ff75a0?style=for-the-badge)](https://github.com/GarnetRapture/everlib-theme)
 [![License](https://img.shields.io/badge/license-MIT-ffc107?style=for-the-badge)](./LICENSE)
 
-**Pure Monochromatic Dark Charcoal & Vivid Crimson Acrylic Theme** featuring a **Claude AI Interactive Controller Panel** for Visual Studio Code and Cursor.
+**Pure Dark Teal & Soft Coral Pink Theme** featuring a **Claude AI Interactive Controller Panel** for Visual Studio Code and Cursor.
 
 </div>
 
@@ -16,7 +16,7 @@
 
 ## 🌟 Overview
 
-**everlib Theme (Garnet Rapture Edition)** is an enterprise-grade dark theme designed for modern software engineers, AI developers, and UI/UX enthusiasts. Built upon a ultra-clean **Pure Dark Charcoal (`#0a0a0a`)** foundation with **Vivid Crimson (`#ff1744`)** and **Gold Amber (`#ffc107`)** accents, it provides complete visual clarity, zero eye strain, and high contrast for coding sessions.
+**everlib Theme (Garnet Rapture Edition)** is an enterprise-grade dark theme designed for modern software engineers, AI developers, and UI/UX enthusiasts. Built upon a ultra-clean **Pure Dark Charcoal & Storm Teal (`#0b1216`)** foundation with **Soft Coral Pink (`#ff75a0`)** and **Electric Blue (`#7aa2f7`)** accents, it provides complete visual clarity, zero eye strain, and high contrast for coding sessions.
 
 <div align="center">
 
@@ -32,9 +32,9 @@
 
 ## Key Features
 
-### 1. Pure Monochromatic Dark Charcoal Palette
-- **Zero Purple / Plum Distortion**: 100% neutral dark charcoal background (`#0a0a0a`) with 8-digit alpha channel opacity (`40`, `55`, `AA`, `CC`) to support native frosted glass & acrylic translucency.
-- **High-Contrast Syntax Highlighting**: Vivid crimson reds (`#ff1744`), amber golds (`#ffc107`), and clean whites (`#ffffff`) for instant code symbol recognition.
+### 1. Pure Dark Charcoal & Storm Teal Palette
+- **Zero Red Distortion**: 100% neutral dark teal background (`#0b1216`) with 8-digit alpha channel opacity (`40`, `55`, `AA`, `CC`) to support native frosted glass & acrylic translucency.
+- **High-Contrast Syntax Highlighting**: Soft coral pinks (`#ff75a0`), amber golds (`#ff9e64`), sky cyans (`#7dcfff`), and electric blues (`#7aa2f7`) for instant code symbol recognition.
 - **Deduplicated & Clean Token Architecture**: Fully verified against VS Code 1.80+ Workbench and Extension specs (0 errors, 0 warnings).
 
 ### 2. Claude AI Interactive Controller Panel
