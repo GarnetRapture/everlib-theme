@@ -60,13 +60,13 @@ export class NekoiSidebarProvider implements vscode.WebviewViewProvider {
   <title>Nekoi Claude AI Panel</title>
   <style>
     :root {
-      --bg-acrylic: rgba(24, 13, 18, 0.55);
-      --card-acrylic: rgba(44, 22, 32, 0.45);
+      --bg-acrylic: rgba(13, 8, 10, 0.45);
+      --card-acrylic: rgba(43, 8, 16, 0.55);
       --text-main: #f4e6db;
-      --text-sub: #d1a668;
-      --accent-color: #ff4d6a;
-      --border-acrylic: rgba(255, 77, 106, 0.25);
-      --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+      --text-sub: #e6b800;
+      --accent-color: #ff2a4b;
+      --border-acrylic: rgba(255, 42, 75, 0.3);
+      --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6);
     }
     body {
       font-family: var(--vscode-font-family, system-ui, -apple-system, sans-serif);
@@ -80,8 +80,8 @@ export class NekoiSidebarProvider implements vscode.WebviewViewProvider {
       box-sizing: border-box;
       position: relative;
       overflow: hidden;
-      backdrop-filter: blur(20px) saturate(180%);
-      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      backdrop-filter: blur(14px) saturate(180%);
+      -webkit-backdrop-filter: blur(14px) saturate(180%);
     }
     .bg-wallpaper {
       position: absolute;
@@ -92,19 +92,19 @@ export class NekoiSidebarProvider implements vscode.WebviewViewProvider {
       background-image: url('${wallpaperUri}');
       background-size: cover;
       background-position: center;
-      opacity: 0.15;
+      opacity: 0.35;
       pointer-events: none;
       z-index: 0;
     }
     .bg-sticker {
       position: absolute;
-      bottom: 60px;
-      right: -10px;
-      width: 110px;
-      opacity: 0.25;
+      bottom: 65px;
+      right: -5px;
+      width: 120px;
+      opacity: 0.55;
       pointer-events: none;
       z-index: 1;
-      filter: drop-shadow(0 0 10px rgba(255, 77, 106, 0.4));
+      filter: drop-shadow(0 0 12px rgba(255, 42, 75, 0.5));
     }
     .container {
       position: relative;
@@ -118,7 +118,7 @@ export class NekoiSidebarProvider implements vscode.WebviewViewProvider {
       align-items: center;
       gap: 10px;
       padding: 10px 12px;
-      background: rgba(44, 22, 32, 0.6);
+      background: rgba(20, 5, 9, 0.75);
       backdrop-filter: blur(12px);
       border: 1px solid var(--border-acrylic);
       border-radius: 10px;
