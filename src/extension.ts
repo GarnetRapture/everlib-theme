@@ -1,7 +1,44 @@
 import * as vscode from 'vscode';
+import * as fs from 'fs';
+import * as path from 'path';
 import { NekoiSidebarProvider } from './sidebarProvider';
 
+async function injectTransparentWebviewCSS(): Promise<void> {
+  try {
+    const appDir = path.dirname(vscode.env.appRoot);
+    const cssPath = path.join(vscode.env.appRoot, 'out', 'vs', 'workbench', 'workbench.desktop.main.css');
+
+    if (fs.existsSync(cssPath)) {
+      const existingCSS = fs.readFileSync(cssPath, 'utf8');
+      const injectionMarker = '/* everlib Theme Transparent Webview & Panel Injection */';
+      
+      if (!existingCSS.includes(injectionMarker)) {
+        const transparentCSS = `
+${injectionMarker}
+.monaco-workbench .part.panel,
+.monaco-workbench .part.sidebar,
+.monaco-workbench .part.editor,
+.monaco-workbench iframe,
+.monaco-workbench .webview,
+.monaco-workbench .interactive-session,
+.monaco-workbench .chat-container,
+.monaco-workbench .conversation-container {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+`;
+        fs.appendFileSync(cssPath, transparentCSS, 'utf8');
+      }
+    }
+  } catch (err) {
+    // Permission or path error fallback
+  }
+}
+
 async function triggerBackgroundReload(): Promise<void> {
+  try {
+    await injectTransparentWebviewCSS();
+  } catch {}
   try {
     await vscode.commands.executeCommand('extension.background.reload');
   } catch {
