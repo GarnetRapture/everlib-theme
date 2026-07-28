@@ -1,0 +1,7 @@
+node_modules/
+out/
+.claude/
+.vscode/
+*.vsix
+*.log
+.DS_Store

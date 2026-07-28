@@ -1,0 +1,72 @@
+{
+  "name": "everlib-theme",
+  "displayName": "everlib-테마",
+  "description": "Nekoi Eversoul Garnet Rapture Color Theme with Claude AI style custom sidebar panel",
+  "version": "1.0.0",
+  "publisher": "GarnetRapture",
+  "author": "GarnetRapture",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/GarnetRapture"
+  },
+  "homepage": "https://github.com/GarnetRapture",
+  "bugs": {
+    "url": "https://github.com/GarnetRapture/issues"
+  },
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Themes",
+    "Other"
+  ],
+  "main": "./out/extension.js",
+  "icon": "icon.png",
+  "activationEvents": [
+    "onView:nekoiEversoulSidebar"
+  ],
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "nekoi-eversoul-sidebar-container",
+          "title": "Nekoi Eversoul",
+          "icon": "resources/icon/garnet-rapture-cards.png"
+        }
+      ]
+    },
+    "views": {
+      "nekoi-eversoul-sidebar-container": [
+        {
+          "type": "webview",
+          "id": "nekoiEversoulSidebar",
+          "name": "Nekoi Claude AI Panel",
+          "icon": "resources/icon/garnet-rapture-cards.png"
+        }
+      ]
+    },
+    "themes": [
+      {
+        "label": "Nekoi Eversoul: Garnet Rapture",
+        "uiTheme": "vs-dark",
+        "path": "./themes/nekoi-eversoul-color-theme.json"
+      }
+    ],
+    "commands": [
+      {
+        "command": "nekoiEversoul.openSidebar",
+        "title": "Nekoi: Open Claude AI Sidebar"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/node": "^18.0.0",
+    "@types/vscode": "^1.80.0",
+    "typescript": "^5.1.0"
+  }
+}
