@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="./resources/icon/garnet-rapture-icon.png" width="128" height="128" alt="everlib Theme Icon" />
+<img src="./icon.png" width="128" height="128" alt="everlib Theme Icon" />
 
 # everlib Theme (Garnet Rapture)
 
