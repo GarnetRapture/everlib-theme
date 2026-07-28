@@ -34,19 +34,44 @@ ${injectionMarker}
   }
 }
 
+function findVSCodeWorkbenchHTMLPaths(): string[] {
+  const paths: string[] = [
+    path.join(vscode.env.appRoot, 'out', 'vs', 'workbench', 'workbench.html'),
+    path.join(vscode.env.appRoot, 'out', 'vs', 'code', 'electron-sandbox', 'workbench', 'workbench.html'),
+    path.join(vscode.env.appRoot, 'out', 'vs', 'code', 'electron-browser', 'workbench', 'workbench.html')
+  ];
+
+  const execDir = path.dirname(process.execPath);
+  paths.push(
+    path.join(execDir, 'resources', 'app', 'out', 'vs', 'code', 'electron-browser', 'workbench', 'workbench.html'),
+    path.join(execDir, 'resources', 'app', 'out', 'vs', 'code', 'electron-sandbox', 'workbench', 'workbench.html'),
+    path.join(execDir, 'resources', 'app', 'out', 'vs', 'workbench', 'workbench.html')
+  );
+
+  try {
+    const subDirs = fs.readdirSync(execDir);
+    for (const sub of subDirs) {
+      const fullSub = path.join(execDir, sub);
+      try {
+        if (fs.statSync(fullSub).isDirectory()) {
+          paths.push(
+            path.join(fullSub, 'resources', 'app', 'out', 'vs', 'code', 'electron-browser', 'workbench', 'workbench.html'),
+            path.join(fullSub, 'resources', 'app', 'out', 'vs', 'code', 'electron-sandbox', 'workbench', 'workbench.html'),
+            path.join(fullSub, 'resources', 'app', 'out', 'vs', 'workbench', 'workbench.html')
+          );
+        }
+      } catch {}
+    }
+  } catch {}
+
+  return paths.filter(p => fs.existsSync(p));
+}
+
 async function injectWorkbenchHTMLWallpaper(imageFsPath: string): Promise<boolean> {
   const normalizedPath = imageFsPath.replace(/\\/g, '/');
   const fileUri = `file:///${normalizedPath.startsWith('/') ? normalizedPath.slice(1) : normalizedPath}`;
   
-  const execDir = path.dirname(process.execPath);
-  const possiblePaths = [
-    path.join(vscode.env.appRoot, 'out', 'vs', 'workbench', 'workbench.html'),
-    path.join(vscode.env.appRoot, 'out', 'vs', 'workbench', 'workbench.desktop.main.html'),
-    path.join(vscode.env.appRoot, 'out', 'vs', 'code', 'electron-sandbox', 'workbench', 'workbench.html'),
-    path.join(execDir, 'resources', 'app', 'out', 'vs', 'code', 'electron-sandbox', 'workbench', 'workbench.html'),
-    path.join(execDir, 'resources', 'app', 'out', 'vs', 'workbench', 'workbench.html'),
-    path.join(vscode.env.appRoot, 'out', 'vs', 'workbench', 'workbench.desktop.main.css')
-  ];
+  const possiblePaths = findVSCodeWorkbenchHTMLPaths();
 
   let patched = false;
   for (const htmlPath of possiblePaths) {
