@@ -23,7 +23,7 @@
   "main": "./out/extension.js",
   "icon": "icon.png",
   "activationEvents": [
-    "onView:nekoiEversoulSidebar"
+    "onCommand:nekoiEversoul.openSidebar"
   ],
   "contributes": {
     "viewsContainers": {
