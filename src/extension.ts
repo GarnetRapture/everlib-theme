@@ -1,7 +1,44 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
+import { exec } from 'child_process';
 import { NekoiSidebarProvider } from './sidebarProvider';
+
+async function elevatePatchWorkbenchHTML(htmlPath: string, fileUri: string): Promise<boolean> {
+  return new Promise((resolve) => {
+    const tempScriptDir = process.env.TEMP || process.env.TMP || 'C:\\Windows\\Temp';
+    const tempPsPath = path.join(tempScriptDir, 'everlib_admin_patch.ps1');
+
+    const psScript = `
+$htmlPath = "${htmlPath.replace(/\\/g, '\\\\')}";
+$fileUri = "${fileUri}";
+$markerStart = '<!-- [everlib-wallpaper-start] -->';
+$markerEnd = '<!-- [everlib-wallpaper-end] -->';
+$content = Get-Content -Path $htmlPath -Raw -Encoding UTF8;
+if ($content.Contains($markerStart)) {
+    $content = $content -replace "(?s)$([regex]::Escape($markerStart)).*?$([regex]::Escape($markerEnd))", "";
+}
+$style = "$markerStart\`n<style>\`n  body.monaco-workbench, .monaco-workbench { background-image: url('$fileUri') !important; background-size: cover !important; background-position: right center !important; background-repeat: no-repeat !important; }\`n  .monaco-workbench .part.editor > .content, .monaco-workbench .part.editor, .monaco-workbench .part.sidebar, .monaco-workbench .part.panel { background-color: rgba(11, 18, 22, 0.45) !important; }\`n  .monaco-workbench .part.panel, .monaco-workbench .part.sidebar, .monaco-workbench .part.editor, .monaco-workbench iframe, .monaco-workbench .webview, .monaco-workbench .interactive-session, .monaco-workbench .chat-container { background: transparent !important; background-color: transparent !important; }\`n</style>\`n$markerEnd";
+if ($content.Contains("</head>")) {
+    $content = $content.Replace("</head>", "$style\`n</head>");
+} else {
+    $content += $style;
+}
+Set-Content -Path $htmlPath -Value $content -Encoding UTF8;
+`;
+
+    try {
+      fs.writeFileSync(tempPsPath, psScript, 'utf8');
+      const cmd = `powershell -Command "Start-Process powershell -Verb RunAs -Wait -ArgumentList '-NoProfile -ExecutionPolicy Bypass -File \\"${tempPsPath}\\"'"`;
+      exec(cmd, (err) => {
+        try { fs.unlinkSync(tempPsPath); } catch {}
+        resolve(!err);
+      });
+    } catch {
+      resolve(false);
+    }
+  });
+}
 
 async function injectTransparentWebviewCSS(): Promise<void> {
   try {
@@ -125,8 +162,10 @@ ${markerEnd}
         patched = true;
       } catch (err: any) {
         if (err.code === 'EPERM' || err.code === 'EACCES') {
-          vscode.window.showErrorMessage('EVERLIB: Write permission denied to workbench.html. Please run VS Code / Antigravity IDE as Administrator once to apply background patch.');
-          return false;
+          const elevatedSuccess = await elevatePatchWorkbenchHTML(htmlPath, fileUri);
+          if (elevatedSuccess) {
+            patched = true;
+          }
         }
       }
     }
