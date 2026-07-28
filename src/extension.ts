@@ -5,7 +5,6 @@ import { NekoiSidebarProvider } from './sidebarProvider';
 
 async function injectTransparentWebviewCSS(): Promise<void> {
   try {
-    const appDir = path.dirname(vscode.env.appRoot);
     const cssPath = path.join(vscode.env.appRoot, 'out', 'vs', 'workbench', 'workbench.desktop.main.css');
 
     if (fs.existsSync(cssPath)) {
