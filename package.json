@@ -22,7 +22,7 @@
   ],
   "main": "./out/extension.js",
   "icon": "icon.png",
-
+  "activationEvents": [],
   "contributes": {
     "viewsContainers": {
       "activitybar": [
