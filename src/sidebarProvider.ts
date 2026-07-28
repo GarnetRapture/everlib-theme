@@ -151,88 +151,47 @@ export class NekoiSidebarProvider implements vscode.WebviewViewProvider {
       letter-spacing: 0.5px;
       box-shadow: 0 0 8px rgba(255, 77, 106, 0.5);
     }
-    .chat-container {
-      flex: 1;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      padding-right: 4px;
-    }
-    .message {
-      padding: 12px 14px;
-      border-radius: 12px;
-      font-size: 12px;
-      line-height: 1.5;
-      max-width: 88%;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-    }
-    .message.system {
-      background: rgba(44, 22, 32, 0.55);
+    .panel-card {
+      background: rgba(20, 5, 9, 0.7);
       backdrop-filter: blur(10px);
       border: 1px solid var(--border-acrylic);
-      align-self: flex-start;
+      border-radius: 10px;
+      padding: 12px;
+      margin-bottom: 12px;
+      box-shadow: var(--glass-shadow);
+    }
+    .panel-card h3 {
+      margin: 0 0 8px 0;
+      font-size: 12px;
+      color: var(--text-sub);
+      font-weight: 600;
+    }
+    .panel-card p {
+      margin: 0 0 10px 0;
+      font-size: 11px;
+      line-height: 1.4;
       color: var(--text-main);
     }
-    .message.user {
-      background: linear-gradient(135deg, rgba(255, 77, 106, 0.85), rgba(110, 32, 54, 0.85));
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      color: #ffffff;
-      align-self: flex-end;
-    }
-    .action-bar {
-      margin-top: 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .input-box {
-      display: flex;
-      gap: 6px;
-    }
-    input[type="text"] {
-      flex: 1;
-      background: rgba(24, 13, 18, 0.7);
-      backdrop-filter: blur(10px);
-      color: var(--text-main);
-      border: 1px solid var(--border-acrylic);
-      padding: 9px 12px;
-      border-radius: 8px;
-      font-size: 12px;
-      outline: none;
-      transition: border-color 0.2s, box-shadow 0.2s;
-    }
-    input[type="text"]:focus {
-      border-color: var(--accent-color);
-      box-shadow: 0 0 10px rgba(255, 77, 106, 0.3);
-    }
-    button {
-      background: linear-gradient(135deg, #6e2036, #4a1520);
+    .action-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #4a0d18, #2b0810);
       color: #ffffff;
       border: 1px solid var(--border-acrylic);
-      padding: 9px 14px;
+      padding: 10px 14px;
       border-radius: 8px;
       font-size: 12px;
       cursor: pointer;
       font-weight: 600;
       transition: all 0.2s;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
     }
-    button:hover {
-      background: linear-gradient(135deg, #ff4d6a, #8f1a2e);
-      box-shadow: 0 0 12px rgba(255, 77, 106, 0.6);
-    }
-    .theme-btn {
-      width: 100%;
-      background: rgba(44, 22, 32, 0.4);
-      backdrop-filter: blur(10px);
-      border: 1px solid var(--border-acrylic);
-      color: var(--text-sub);
-    }
-    .theme-btn:hover {
-      background: rgba(110, 32, 54, 0.6);
-      color: #ffffff;
+    .action-btn:hover {
+      background: linear-gradient(135deg, #ff2a4b, #8b152b);
+      box-shadow: 0 0 12px rgba(255, 42, 75, 0.6);
     }
   </style>
 </head>
@@ -243,56 +202,32 @@ export class NekoiSidebarProvider implements vscode.WebviewViewProvider {
   <div class="container">
     <div class="header">
       <img src="${iconUri}" alt="Icon" />
-      <h2>everlib-테마 패널</h2>
-      <span class="badge">ACRYLIC</span>
+      <h2>everlib 커스텀 컨트롤러</h2>
+      <span class="badge">v1.0.2</span>
     </div>
 
-    <div class="chat-container" id="chatContainer">
-      <div class="message system">
-        안녕하세요! everlib 다크 아크릴 투명 패널입니다. 에디터 투명도 및 Garnet Rapture 테마가 결합되어 있습니다.
-      </div>
+    <div class="panel-card">
+      <h3>Garnet Rapture Color Theme</h3>
+      <p>가넷 딥 다크 크림슨 레드 & 흑장미 톤 컬러 테마를 적용합니다.</p>
+      <button class="action-btn" id="applyThemeBtn">Garnet Rapture 테마 즉시 적용</button>
     </div>
 
-    <div class="action-bar">
-      <button class="theme-btn" id="applyThemeBtn">Garnet Rapture 테마 즉시 적용</button>
-      <button class="theme-btn" id="setupWallpaperBtn">메인 에디터 월페이퍼 자동 주입</button>
-      <div class="input-box">
-        <input type="text" id="userInput" placeholder="메시지를 입력하세요..." />
-        <button id="sendBtn">전송</button>
-      </div>
+    <div class="panel-card">
+      <h3>메인 에디터 월페이퍼 자동 설정</h3>
+      <p>resources/wallpaper/garnet-rapture-costume01.png 이미지를 에디터 메인 배경에 주입합니다.</p>
+      <button class="action-btn" id="setupWallpaperBtn">메인 월페이퍼 자동 주입</button>
+    </div>
+
+    <div class="panel-card">
+      <h3>Claude / Codex AI 패널 연동</h3>
+      <p>chat.*, inlineChat.*, interactive.* 토큰이 전면 수록되어 Claude Code 패널과 자동 융합됩니다.</p>
     </div>
   </div>
 
   <script nonce="${nonce}">
     const vscode = acquireVsCodeApi();
-    const chatContainer = document.getElementById('chatContainer');
-    const userInput = document.getElementById('userInput');
-    const sendBtn = document.getElementById('sendBtn');
     const applyThemeBtn = document.getElementById('applyThemeBtn');
     const setupWallpaperBtn = document.getElementById('setupWallpaperBtn');
-
-    function appendMessage(text, isUser) {
-      const msgDiv = document.createElement('div');
-      msgDiv.className = 'message ' + (isUser ? 'user' : 'system');
-      msgDiv.textContent = text;
-      chatContainer.appendChild(msgDiv);
-      chatContainer.scrollTop = chatContainer.scrollHeight;
-    }
-
-    sendBtn.addEventListener('click', () => {
-      const val = userInput.value.trim();
-      if (val) {
-        appendMessage(val, true);
-        vscode.postMessage({ type: 'sendMessage', value: val });
-        userInput.value = '';
-      }
-    });
-
-    userInput.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') {
-        sendBtn.click();
-      }
-    });
 
     applyThemeBtn.addEventListener('click', () => {
       vscode.postMessage({ type: 'applyTheme' });
@@ -300,13 +235,6 @@ export class NekoiSidebarProvider implements vscode.WebviewViewProvider {
 
     setupWallpaperBtn.addEventListener('click', () => {
       vscode.postMessage({ type: 'setupWallpaper' });
-    });
-
-    window.addEventListener('message', (event) => {
-      const message = event.data;
-      if (message.type === 'addResponse') {
-        appendMessage(message.value, false);
-      }
     });
   </script>
 </body>
