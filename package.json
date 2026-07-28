@@ -50,6 +50,13 @@
         "path": "./themes/nekoi-eversoul-color-theme.json"
       }
     ],
+    "iconThemes": [
+      {
+        "id": "everlib-icon-theme",
+        "label": "everlib Seti Icon Theme",
+        "path": "./themes/icon-theme/icons/vs-seti-icon-theme.json"
+      }
+    ],
     "commands": [
       {
         "command": "nekoiEversoul.openSidebar",
