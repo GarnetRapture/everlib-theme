@@ -34,43 +34,75 @@ ${injectionMarker}
   }
 }
 
-async function injectDirectWallpaperCSS(imageFsPath: string): Promise<void> {
-  try {
-    const cssPath = path.join(vscode.env.appRoot, 'out', 'vs', 'workbench', 'workbench.desktop.main.css');
-    if (fs.existsSync(cssPath)) {
-      const normalizedPath = imageFsPath.replace(/\\/g, '/');
-      const fileUri = `file:///${normalizedPath.startsWith('/') ? normalizedPath.slice(1) : normalizedPath}`;
-      let content = fs.readFileSync(cssPath, 'utf8');
+async function injectWorkbenchHTMLWallpaper(imageFsPath: string): Promise<boolean> {
+  const normalizedPath = imageFsPath.replace(/\\/g, '/');
+  const fileUri = `file:///${normalizedPath.startsWith('/') ? normalizedPath.slice(1) : normalizedPath}`;
+  
+  const possiblePaths = [
+    path.join(vscode.env.appRoot, 'out', 'vs', 'workbench', 'workbench.html'),
+    path.join(vscode.env.appRoot, 'out', 'vs', 'workbench', 'workbench.desktop.main.html')
+  ];
 
-      const markerStart = '/* [everlib-wallpaper-start] */';
-      const markerEnd = '/* [everlib-wallpaper-end] */';
-      if (content.includes(markerStart)) {
-        const regex = new RegExp(`${markerStart.replace(/\[/g, '\\[').replace(/\]/g, '\\]')}[\\s\\S]*?${markerEnd.replace(/\[/g, '\\[').replace(/\]/g, '\\]')}`, 'g');
-        content = content.replace(regex, '');
-      }
+  let patched = false;
+  for (const htmlPath of possiblePaths) {
+    if (fs.existsSync(htmlPath)) {
+      try {
+        let content = fs.readFileSync(htmlPath, 'utf8');
+        const markerStart = '<!-- [everlib-wallpaper-start] -->';
+        const markerEnd = '<!-- [everlib-wallpaper-end] -->';
 
-      const wallpaperCSS = `
+        if (content.includes(markerStart)) {
+          const regex = new RegExp(`${markerStart.replace(/\[/g, '\\[').replace(/\]/g, '\\]')}[\\s\\S]*?${markerEnd.replace(/\[/g, '\\[').replace(/\]/g, '\\]')}`, 'g');
+          content = content.replace(regex, '');
+        }
+
+        const injectHTML = `
 ${markerStart}
-body.monaco-workbench,
-.monaco-workbench {
-  background-image: url('${fileUri}') !important;
-  background-size: cover !important;
-  background-position: right center !important;
-  background-repeat: no-repeat !important;
-}
-.monaco-workbench .part.editor > .content,
-.monaco-workbench .part.editor,
-.monaco-workbench .part.sidebar,
-.monaco-workbench .part.panel {
-  background-color: rgba(11, 18, 22, 0.45) !important;
-}
+<style>
+  body.monaco-workbench,
+  .monaco-workbench {
+    background-image: url('${fileUri}') !important;
+    background-size: cover !important;
+    background-position: right center !important;
+    background-repeat: no-repeat !important;
+  }
+  .monaco-workbench .part.editor > .content,
+  .monaco-workbench .part.editor,
+  .monaco-workbench .part.sidebar,
+  .monaco-workbench .part.panel {
+    background-color: rgba(11, 18, 22, 0.45) !important;
+  }
+  .monaco-workbench .part.panel,
+  .monaco-workbench .part.sidebar,
+  .monaco-workbench .part.editor,
+  .monaco-workbench iframe,
+  .monaco-workbench .webview,
+  .monaco-workbench .interactive-session,
+  .monaco-workbench .chat-container {
+    background: transparent !important;
+    background-color: transparent !important;
+  }
+</style>
 ${markerEnd}
 `;
-      fs.writeFileSync(cssPath, content + wallpaperCSS, 'utf8');
+        if (content.includes('</head>')) {
+          content = content.replace('</head>', `${injectHTML}\n</head>`);
+        } else {
+          content += injectHTML;
+        }
+
+        fs.writeFileSync(htmlPath, content, 'utf8');
+        patched = true;
+      } catch (err: any) {
+        if (err.code === 'EPERM' || err.code === 'EACCES') {
+          vscode.window.showErrorMessage('EVERLIB: Write permission denied to workbench.html. Please run VS Code / Antigravity IDE as Administrator once to apply background patch.');
+          return false;
+        }
+      }
     }
-  } catch (err) {
-    // Write fallback
   }
+
+  return patched;
 }
 
 async function triggerBackgroundReload(customImagePath?: string): Promise<void> {
@@ -80,6 +112,15 @@ async function triggerBackgroundReload(customImagePath?: string): Promise<void> 
   if (customImagePath) {
     try {
       await injectDirectWallpaperCSS(customImagePath);
+    } catch {}
+    try {
+      const patchedHTML = await injectWorkbenchHTMLWallpaper(customImagePath);
+      if (patchedHTML) {
+        const action = await vscode.window.showInformationMessage('EVERLIB: Workbench HTML background patched successfully. Reload Window to apply changes.', 'Reload Window');
+        if (action === 'Reload Window') {
+          vscode.commands.executeCommand('workbench.action.reloadWindow');
+        }
+      }
     } catch {}
   }
   try {
