@@ -31,7 +31,8 @@ export class NekoiSidebarProvider implements vscode.WebviewViewProvider {
         }
         case 'applyTheme': {
           await vscode.workspace.getConfiguration('workbench').update('colorTheme', 'Nekoi Eversoul: Garnet Rapture', true);
-          vscode.window.showInformationMessage('Nekoi Eversoul: Garnet Rapture theme applied.');
+          await vscode.workspace.getConfiguration('workbench').update('iconTheme', 'everlib-icon-theme', true);
+          vscode.window.showInformationMessage('Nekoi Eversoul: Garnet Rapture theme and everlib Seti Icon Theme applied.');
           break;
         }
         case 'setupWallpaper': {
