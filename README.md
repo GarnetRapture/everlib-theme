@@ -47,6 +47,43 @@
 
 ---
 
+## 📥 Installation Guide
+
+### Option 1: Download VSIX from GitHub Releases (Recommended)
+1. Go to the [GitHub Releases Page](https://github.com/GarnetRapture/everlib-theme/releases/tag/v1.0.0).
+2. Download the compiled release package **`everlib-theme-1.0.0.vsix`**.
+3. Open Visual Studio Code or Cursor.
+4. Open the Extensions View (`Ctrl+Shift+X` or `Cmd+Shift+X`).
+5. Click the `...` (More Actions) menu in the top-right corner of the Extensions panel and select **"Install from VSIX..."**.
+6. Select the downloaded `everlib-theme-1.0.0.vsix` file to install.
+
+### Option 2: Install via Command Line
+```bash
+code --install-extension everlib-theme-1.0.0.vsix --force
+```
+
+---
+
+## 🚀 Quick Start & Usage
+
+1. **Activate Color Theme**:
+   - Open Command Palette (`Ctrl+Shift+P` / `Cmd+Shift+P`).
+   - Type `Preferences: Color Theme` and press `Enter`.
+   - Select **"Nekoi Eversoul: Garnet Rapture"**.
+
+2. **Open Interactive Controller Panel**:
+   - Click the **everlib Panel** icon on the left Activity Bar.
+   - Click **`Apply Garnet Rapture Theme`** to switch color palettes instantly.
+   - Click **`Setup Default Wallpaper`** to configure main editor background translucency.
+   - Click **`Select Custom Image...`** to pick any custom wallpaper file from your local disk.
+
+3. **Available Extension Commands**:
+   - `everlib: Open Panel` — Opens the sidebar controller panel.
+   - `everlib: Setup Default Editor Wallpaper` — Automatically configures 2026 background settings.
+   - `everlib: Select Custom Background Image...` — Opens file browser to set custom editor background.
+
+---
+
 ## ⚙️ Background Translucency Setup
 
 To enable wallpaper translucency in VS Code, run the **`everlib: Setup Default Editor Wallpaper`** command or configure your global `settings.json` with the following 2026 specification:
