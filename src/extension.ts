@@ -111,9 +111,6 @@ async function triggerBackgroundReload(customImagePath?: string): Promise<void> 
   } catch {}
   if (customImagePath) {
     try {
-      await injectDirectWallpaperCSS(customImagePath);
-    } catch {}
-    try {
       const patchedHTML = await injectWorkbenchHTMLWallpaper(customImagePath);
       if (patchedHTML) {
         const action = await vscode.window.showInformationMessage('EVERLIB: Workbench HTML background patched successfully. Reload Window to apply changes.', 'Reload Window');
