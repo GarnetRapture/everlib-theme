@@ -2,7 +2,7 @@
   "name": "everlib-theme",
   "displayName": "everlib-테마",
   "description": "Nekoi Eversoul Garnet Rapture Color Theme with Claude AI style custom sidebar panel",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "publisher": "GarnetRapture",
   "author": "GarnetRapture",
   "repository": {
@@ -25,10 +25,10 @@
   "activationEvents": [],
   "contributes": {
     "viewsContainers": {
-      "auxiliarybar": [
+      "activitybar": [
         {
           "id": "nekoi-eversoul-sidebar-container",
-          "title": "everlib 우측 패널",
+          "title": "everlib 패널",
           "icon": "resources/icon/garnet-rapture-cards.png"
         }
       ]
@@ -58,6 +58,10 @@
       {
         "command": "nekoiEversoul.setupWallpaper",
         "title": "Nekoi: Setup Editor Background Wallpaper"
+      },
+      {
+        "command": "nekoiEversoul.createChatSessionTab",
+        "title": "Nekoi: Open Claude / Codex Chat Session Tab"
       }
     ]
   },
