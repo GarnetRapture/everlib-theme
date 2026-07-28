@@ -38,9 +38,14 @@ async function injectWorkbenchHTMLWallpaper(imageFsPath: string): Promise<boolea
   const normalizedPath = imageFsPath.replace(/\\/g, '/');
   const fileUri = `file:///${normalizedPath.startsWith('/') ? normalizedPath.slice(1) : normalizedPath}`;
   
+  const execDir = path.dirname(process.execPath);
   const possiblePaths = [
     path.join(vscode.env.appRoot, 'out', 'vs', 'workbench', 'workbench.html'),
-    path.join(vscode.env.appRoot, 'out', 'vs', 'workbench', 'workbench.desktop.main.html')
+    path.join(vscode.env.appRoot, 'out', 'vs', 'workbench', 'workbench.desktop.main.html'),
+    path.join(vscode.env.appRoot, 'out', 'vs', 'code', 'electron-sandbox', 'workbench', 'workbench.html'),
+    path.join(execDir, 'resources', 'app', 'out', 'vs', 'code', 'electron-sandbox', 'workbench', 'workbench.html'),
+    path.join(execDir, 'resources', 'app', 'out', 'vs', 'workbench', 'workbench.html'),
+    path.join(vscode.env.appRoot, 'out', 'vs', 'workbench', 'workbench.desktop.main.css')
   ];
 
   let patched = false;
