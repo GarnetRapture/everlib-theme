@@ -34,20 +34,60 @@ ${injectionMarker}
   }
 }
 
-async function triggerBackgroundReload(): Promise<void> {
+async function injectDirectWallpaperCSS(imageFsPath: string): Promise<void> {
+  try {
+    const cssPath = path.join(vscode.env.appRoot, 'out', 'vs', 'workbench', 'workbench.desktop.main.css');
+    if (fs.existsSync(cssPath)) {
+      const normalizedPath = imageFsPath.replace(/\\/g, '/');
+      const fileUri = `file:///${normalizedPath.startsWith('/') ? normalizedPath.slice(1) : normalizedPath}`;
+      let content = fs.readFileSync(cssPath, 'utf8');
+
+      const markerStart = '/* [everlib-wallpaper-start] */';
+      const markerEnd = '/* [everlib-wallpaper-end] */';
+      if (content.includes(markerStart)) {
+        const regex = new RegExp(`${markerStart.replace(/\[/g, '\\[').replace(/\]/g, '\\]')}[\\s\\S]*?${markerEnd.replace(/\[/g, '\\[').replace(/\]/g, '\\]')}`, 'g');
+        content = content.replace(regex, '');
+      }
+
+      const wallpaperCSS = `
+${markerStart}
+body.monaco-workbench,
+.monaco-workbench {
+  background-image: url('${fileUri}') !important;
+  background-size: cover !important;
+  background-position: right center !important;
+  background-repeat: no-repeat !important;
+}
+.monaco-workbench .part.editor > .content,
+.monaco-workbench .part.editor,
+.monaco-workbench .part.sidebar,
+.monaco-workbench .part.panel {
+  background-color: rgba(11, 18, 22, 0.45) !important;
+}
+${markerEnd}
+`;
+      fs.writeFileSync(cssPath, content + wallpaperCSS, 'utf8');
+    }
+  } catch (err) {
+    // Write fallback
+  }
+}
+
+async function triggerBackgroundReload(customImagePath?: string): Promise<void> {
   try {
     await injectTransparentWebviewCSS();
   } catch {}
+  if (customImagePath) {
+    try {
+      await injectDirectWallpaperCSS(customImagePath);
+    } catch {}
+  }
   try {
     await vscode.commands.executeCommand('extension.background.reload');
-  } catch {
-    // Command not found if background extension is not installed
-  }
+  } catch {}
   try {
     await vscode.commands.executeCommand('backgroundCover.start');
-  } catch {
-    // Command not found if background-cover extension is not installed
-  }
+  } catch {}
 }
 
 export function activate(context: vscode.ExtensionContext): void {
@@ -101,8 +141,8 @@ export function activate(context: vscode.ExtensionContext): void {
       await coverConfig.update('imagePath', formattedPath, vscode.ConfigurationTarget.Global);
       await coverConfig.update('opacity', 0.25, vscode.ConfigurationTarget.Global);
 
-      // 3. Automatically trigger background extensions to patch and render
-      await triggerBackgroundReload();
+      // 3. Automatically trigger background extensions and direct CSS patch
+      await triggerBackgroundReload(wallpaperPath);
 
       vscode.window.showInformationMessage(`everlib Default Wallpaper configured & background reloaded: ${fileUri}`);
     }
@@ -146,8 +186,8 @@ export function activate(context: vscode.ExtensionContext): void {
         await coverConfig.update('imagePath', imagePath, vscode.ConfigurationTarget.Global);
         await coverConfig.update('opacity', 0.25, vscode.ConfigurationTarget.Global);
 
-        // 3. Automatically trigger background extensions to patch and render
-        await triggerBackgroundReload();
+        // 3. Automatically trigger background extensions and direct CSS patch
+        await triggerBackgroundReload(imagePath);
 
         vscode.window.showInformationMessage(`everlib Custom Wallpaper set & background reloaded: ${formattedUri}`);
       }
