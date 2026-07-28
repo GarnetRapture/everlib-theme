@@ -1,69 +1,125 @@
-# everlib-테마 (everlib-theme)
+<div align="center">
 
-VS Code 및 호환 에디터(Cursor 등)를 위한 **everlib-테마** (Nekoi Eversoul Garnet Rapture 컬러 테마) 및 **Claude AI 스타일 커스텀 사이드바 패널** 확장 프로그램 프로젝트입니다.
+<img src="./resources/icon/garnet-rapture-icon.png" width="128" height="128" alt="everlib Theme Icon" />
 
-- **Author**: GarnetRapture
-- **GitHub Repository**: [https://github.com/GarnetRapture](https://github.com/GarnetRapture)
+# everlib Theme (Garnet Rapture)
 
-## 주요 기능
+[![VS Code Extension](https://img.shields.io/badge/VS%20Code-v1.80%2B-007ACC?style=for-the-badge&logo=visualstudiocode&logoColor=white)](https://marketplace.visualstudio.com/)
+[![Theme Version](https://img.shields.io/badge/version-1.0.0-ff1744?style=for-the-badge)](https://github.com/GarnetRapture/everlib-theme)
+[![License](https://img.shields.io/badge/license-MIT-ffc107?style=for-the-badge)](./LICENSE)
 
-1. **Garnet Rapture Color Theme**:
-   - 에버소울 가넷 테마 기반의 다크 레드 & 골드 보라 계열 고급 컬러 팔레트.
-   - VS Code Workbench 및 에디터 구문 하이라이팅 완전 지원.
+**Pure Monochromatic Dark Charcoal & Vivid Crimson Acrylic Theme** featuring a **Claude AI Interactive Controller Panel** for Visual Studio Code and Cursor.
 
-2. **Claude AI Style Custom Sidebar View Panel**:
-   - 에디터 좌측 액티비티 바(Activity Bar) 전용 아이콘 배치.
-   - WebviewViewProvider 기반 양방향 메세지 통신 대화형 사이드바 인터페이스.
-   - 사이드바 내 테마 즉시 적용 및 에디터 인터랙션 명령어 기능 지원.
+</div>
 
-3. **에디터 투명도 & 배경 월페이퍼 최적화**:
-   - `editor.background`에 고도화된 다크 틴트 투명도(`#180d1222`)를 적용하여 메인 코드 가독성(Contrast Ratio)을 100% 보장.
-   - 외부 배경 확장(`background` by shalldie 또는 Windows/macOS 투명도)과 연동 시 코드 작성에 방해 없이 `resources/wallpaper/garnet-rapture-costume01.png` 이미지가 자연스럽게 비쳐 보이도록 설계.
+---
 
-### 메인 에디터 월페이퍼 권장 설정 (`settings.json`)
+## 🌟 Overview
+
+**everlib Theme (Garnet Rapture Edition)** is an enterprise-grade dark theme designed for modern software engineers, AI developers, and UI/UX enthusiasts. Built upon a ultra-clean **Pure Dark Charcoal (`#0a0a0a`)** foundation with **Vivid Crimson (`#ff1744`)** and **Gold Amber (`#ffc107`)** accents, it provides complete visual clarity, zero eye strain, and high contrast for coding sessions.
+
+<div align="center">
+
+### 🎨 Visual Assets Showcase
+
+| Wallpaper Asset | Controller Panel Sticker |
+| :---: | :---: |
+| <img src="./resources/wallpaper/garnet-rapture-costume01.png" width="420" alt="Wallpaper Sample" /> | <img src="./resources/sticker/garnet-rapture-bunny.png" width="220" alt="Sticker Sample" /> |
+
+</div>
+
+---
+
+## Key Features
+
+### 1. Pure Monochromatic Dark Charcoal Palette
+- **Zero Purple / Plum Distortion**: 100% neutral dark charcoal background (`#0a0a0a`) with 8-digit alpha channel opacity (`40`, `55`, `AA`, `CC`) to support native frosted glass & acrylic translucency.
+- **High-Contrast Syntax Highlighting**: Vivid crimson reds (`#ff1744`), amber golds (`#ffc107`), and clean whites (`#ffffff`) for instant code symbol recognition.
+- **Deduplicated & Clean Token Architecture**: Fully verified against VS Code 1.80+ Workbench and Extension specs (0 errors, 0 warnings).
+
+### 2. Claude AI Interactive Controller Panel
+- **Dedicated Sidebar View**: Seamlessly accessible via the custom Activity Bar container (`everlib Panel`).
+- **One-Click Actions**: Apply the theme instantly or configure the main editor background wallpaper with a single click.
+- **Custom Image Picker**: Built-in support (`everlib: Select Custom Background Image...`) allowing users to choose any `.png`, `.jpg`, `.webp`, or `.gif` image from their local filesystem.
+
+### 3. Automated 2026 Background Translucency Specification
+- Automatically writes compliant `background.editor` and `backgroundCover` configuration parameters to global `settings.json` for compatibility with third-party background extensions (`shana.vscode-background`, `background-cover`).
+
+---
+
+## ⚙️ Background Translucency Setup
+
+To enable wallpaper translucency in VS Code, run the **`everlib: Setup Default Editor Wallpaper`** command or configure your global `settings.json` with the following 2026 specification:
+
 ```json
-"background.enabled": true,
-"background.customImages": [
-  "file:///path/to/Nekoi_eversoul_theme/resources/wallpaper/garnet-rapture-costume01.png"
-],
-"background.editor": {
-  "opacity": 0.08,
-  "style": {
-    "background-size": "cover",
-    "background-position": "center center"
-  }
+{
+  "background.enabled": true,
+  "background.useDefault": false,
+  "background.customImages": [
+    "file:///D:/26_project/Nekoi_eversoul_theme/resources/wallpaper/garnet-rapture-costume01.png"
+  ],
+  "background.editor": {
+    "useFront": false,
+    "style": {
+      "background-position": "center",
+      "background-size": "cover",
+      "background-repeat": "no-repeat",
+      "opacity": 0.25
+    },
+    "images": [
+      "file:///D:/26_project/Nekoi_eversoul_theme/resources/wallpaper/garnet-rapture-costume01.png"
+    ]
+  },
+  "backgroundCover.imagePath": "D:/26_project/Nekoi_eversoul_theme/resources/wallpaper/garnet-rapture-costume01.png",
+  "backgroundCover.opacity": 0.25
 }
 ```
 
-## 프로젝트 구조
+---
+
+## 📁 Repository Structure
 
 ```
-Nekoi_eversoul_theme/
-├── package.json                         # 확장 프로그램 매니페스트 (Views & Themes 매핑)
-├── tsconfig.json                        # TypeScript 컴파일 설정
-├── .vscodeignore                        # VSIX 패키징 제외 대상 설정
-├── README.md                            # 확장 프로그램 안내 문서
-├── icon.png                             # 확장 프로그램 대표 아이콘
+everlib-theme/
+├── package.json                         # Extension manifest & command declarations
+├── tsconfig.json                        # TypeScript compilation configuration
+├── everlib-theme-1.0.0.vsix             # Compiled release extension package
+├── README.md                            # Official documentation (English)
+├── icon.png                             # Extension icon
 ├── themes/
-│   └── nekoi-eversoul-color-theme.json  # 컬러 테마 정의 JSON
+│   └── nekoi-eversoul-color-theme.json  # Garnet Rapture Color Theme JSON
 ├── src/
-│   ├── extension.ts                     # 확장 엔트리 포인트 (활성화 & 명령어 등록)
-│   └── sidebarProvider.ts               # Claude AI 사이드바 패널 프로바이더
-└── resources/                           # 테마 에셋 및 테마 이미지
-    ├── icon/
-    ├── sticker/
-    └── wallpaper/
+│   ├── extension.ts                     # Main extension entry point & commands
+│   └── sidebarProvider.ts               # Interactive Webview sidebar provider
+└── resources/                           # Project visual assets
+    ├── icon/                            # Extension icons
+    ├── sticker/                         # Sidebar panel stickers
+    └── wallpaper/                       # High-resolution wallpapers
 ```
 
-## 개발 및 빌드 안내
+---
+
+## 🛠️ Development & Build Guide
 
 ```bash
-# 디펜던시 설치
+# 1. Install dependencies
 npm install
 
-# TypeScript 코드 컴파일
+# 2. Compile TypeScript source files
 npm run compile
 
-# 패키지 빌드 (.vsix)
-npx vsce package
+# 3. Package into VSIX artifact
+npx vsce package --no-git-tag-version
+
+# 4. Install locally in VS Code
+code --install-extension everlib-theme-1.0.0.vsix --force
 ```
+
+---
+
+<div align="center">
+
+Created with ❤️ by **GarnetRapture**  
+[GitHub Repository](https://github.com/GarnetRapture/everlib-theme)
+
+</div>
