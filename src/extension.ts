@@ -4,6 +4,11 @@ import { NekoiSidebarProvider } from './sidebarProvider';
 export function activate(context: vscode.ExtensionContext): void {
   const sidebarProvider = new NekoiSidebarProvider(context.extensionUri);
 
+  // Auto-apply wallpaper background to main editor area on activation
+  setTimeout(() => {
+    vscode.commands.executeCommand('nekoiEversoul.setupWallpaper');
+  }, 1000);
+
   context.subscriptions.push(
     vscode.window.registerWebviewViewProvider(
       NekoiSidebarProvider.viewType,
