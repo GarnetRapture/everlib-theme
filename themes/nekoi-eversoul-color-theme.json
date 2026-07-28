@@ -251,6 +251,22 @@
     "property": "#7dcfff",
     "parameter": "#e0af68"
   },
+  "semanticHighlighting": true,
+  "semanticTokenColors": {
+    "keyword": "#ff9e64",
+    "keyword.control": "#ff9e64",
+    "modifier": "#ff9e64",
+    "type": "#7aa2f7",
+    "class": "#7aa2f7",
+    "namespace": "#ff75a0",
+    "parameter": "#e0af68",
+    "property": "#7dcfff",
+    "variable": "#c0caf5",
+    "function": "#7aa2f7",
+    "method": "#7aa2f7",
+    "string": "#9ece6a",
+    "number": "#ff75a0"
+  },
   "tokenColors": [
     {
       "scope": ["emphasis"],
@@ -323,10 +339,16 @@
     {
       "scope": [
         "keyword",
+        "keyword.control",
+        "keyword.control.cs",
         "keyword.other",
+        "keyword.other.cs",
         "keyword.type",
+        "keyword.type.cs",
+        "keyword.cs",
         "storage.type",
         "storage.type.cs",
+        "storage.type.primitive.cs",
         "storage.modifier",
         "storage.modifier.cs",
         "keyword.operator.optional",
@@ -343,6 +365,13 @@
         "punctuation.definition.raw.markdown"
       ],
       "settings": { "foreground": "#ff9e64", "fontStyle": "bold" }
+    },
+    {
+      "scope": [
+        "entity.name.namespace",
+        "entity.name.namespace.cs"
+      ],
+      "settings": { "foreground": "#ff75a0", "fontStyle": "bold" }
     },
     {
       "scope": [
