@@ -54,7 +54,7 @@
       {
         "id": "everlib-icon-theme",
         "label": "everlib Seti Icon Theme",
-        "path": "./themes/icon-theme/icons/vs-seti-icon-theme.json"
+        "path": "./themes/icon-theme/vs-seti-icon-theme.json"
       }
     ],
     "commands": [
