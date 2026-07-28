@@ -323,8 +323,12 @@
     {
       "scope": [
         "keyword",
+        "keyword.other",
+        "keyword.type",
         "storage.type",
+        "storage.type.cs",
         "storage.modifier",
+        "storage.modifier.cs",
         "keyword.operator.optional",
         "keyword.operator.new",
         "keyword.operator.instanceof",
